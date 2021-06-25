@@ -22,18 +22,16 @@ using StringTools;
 
 class MenuState extends MenuUIState
 {
-	var menuItems = new FlxTypedGroup<FlxText>();
-
 	var menuItem:FlxText;
-
 	var curSelected:Int = 0;
-
 	var menuOptions:Array<String> = ['Choose a Game', 'Multiplayer', 'Options', 'Exit'];
-
+	var menuItems = new FlxTypedGroup<FlxText>();
 	var camFollow:FlxObject;
 
 	override function create()
 	{
+		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(AssetPaths.image('bg'));
+		add(bg);
 		add(menuItems);
 
 		for (i in 0...menuOptions.length)
@@ -111,9 +109,9 @@ class MenuState extends MenuUIState
 		super.update(elapsed);
 	}
 
-	function changeItem(huh:Int = 0)
+	function changeItem(number:Int = 0)
 	{
-		curSelected += huh;
+		curSelected += number;
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
