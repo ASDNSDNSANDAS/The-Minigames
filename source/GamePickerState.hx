@@ -2,7 +2,7 @@ package;
 
 import flixel.FlxState;
 
-class GamePickerState extends FlxState
+class GamePickerState extends MenuState
 {
 	override public function create()
 	{

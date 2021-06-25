@@ -2,7 +2,7 @@ package;
 
 import flixel.FlxState;
 
-class MainMenuState extends FlxState
+class OptionsMenu extends MenuUIState
 {
 	override public function create()
 	{
