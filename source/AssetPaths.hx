@@ -71,11 +71,6 @@ class AssetPaths
 		return getPath('music/$key.$SOUND_EXT', MUSIC);
 	}
 
-	inline static public function inst(game:String, name:String)
-	{
-		return getPath('music/$game/$name.$SOUND_EXT', MUSIC);
-	}
-
 	inline static public function image(key:String)
 	{
 		return getPath('images/$key.png', IMAGE);
