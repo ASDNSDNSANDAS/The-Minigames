@@ -84,7 +84,6 @@ enum Control
 enum KeyboardScheme
 {
 	Solo;
-	Duo(first:Bool);
 	None;
 	Custom;
 }

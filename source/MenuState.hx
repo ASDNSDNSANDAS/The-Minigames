@@ -22,11 +22,11 @@ using StringTools;
 
 class MenuState extends MenuUIState
 {
-	var menuItem:FlxText;
-	var curSelected:Int = 0;
+	var selectedMenu:Int = 0;
+
 	var menuOptions:Array<String> = ['Choose a Game', 'Multiplayer', 'Options', 'Exit'];
-	var menuItems = new FlxTypedGroup<FlxText>();
-	var camFollow:FlxObject;
+	var menuItem:FlxText;
+	var menuItems:FlxTypedGroup<FlxText>;
 
 	override function create()
 	{
@@ -36,30 +36,29 @@ class MenuState extends MenuUIState
 
 		for (i in 0...menuOptions.length)
 		{
-			menuItem = new FlxText(50, 70);
+			menuItem = new FlxText(50, 70, 0, menuOptions[i], 64);
 			menuItem.ID = i;
-			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			menuItem.scrollFactor.set();
-			menuItem.antialiasing = true;
-			menuItem.y = 60 + (i * 160);
+			menuItem.y = 60 + (i * 80);
 		}
 	}
 
-	var selectedOption:Bool = false;
-
 	override function update(elapsed:Float)
 	{
+		super.update(elapsed);
+
+		var selectedOption:Bool = false; // this makes it player not able to move to a different option after he pressed
+
 		if (!selectedOption)
 		{
 			if (FlxG.keys.justPressed.UP)
 			{
-				changeItem(-1);
+				changeMenuOption(-1);
 			}
 
 			if (FlxG.keys.justPressed.DOWN)
 			{
-				changeItem(1);
+				changeMenuOption(1);
 			}
 
 			if (FlxG.keys.justPressed.ENTER)
@@ -68,67 +67,42 @@ class MenuState extends MenuUIState
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{
-					if (curSelected != spr.ID)
+					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
-						FlxTween.tween(spr, {alpha: 0}, 1.3, {
-							ease: FlxEase.quadOut,
-							onComplete: function(twn:FlxTween)
-							{
-								spr.kill();
-							}
-						});
-					}
-					else
-					{
-						new FlxTimer().start(1, function(tmr:FlxTimer)
-						{
-							var chosenOption:String = menuOptions[curSelected];
+						var chosenOption:String = menuOptions[selectedMenu];
 
-							switch (chosenOption)
-							{
-								case 'Choose a Game':
-									FlxG.switchState(new GamePickerState());
-								case 'Multiplayer':
-									OpenURL('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
-								case 'Options':
-									FlxG.switchState(new OptionsMenu());
-								case 'Exit':
-									System.exit(0);
-							}
-						});
-					}
+						switch (chosenOption)
+						{
+							case 'Choose a Game':
+								FlxG.switchState(new GamePickerState());
+							case 'Multiplayer':
+								OpenURL('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+							case 'Options':
+								FlxG.switchState(new OptionsMenu());
+							case 'Exit':
+								System.exit(0);
+						}
+					});
 				});
 			}
 		}
 
-		menuItems.forEach(function(spr:FlxSprite)
+		menuItems.forEach(function(option:FlxText)
 		{
-			spr.screenCenter(X);
+			menuItem.color = FlxColor.WHITE;
+
+			if (option.ID == selectedMenu)
+				option.color = FlxColor.YELLOW;
 		});
-		
-		super.update(elapsed);
 	}
 
-	function changeItem(number:Int = 0)
+	function changeMenuOption(number:Int = 0)
 	{
-		curSelected += number;
+		selectedMenu += number;
 
-		if (curSelected >= menuItems.length)
-			curSelected = 0;
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;
-
-		menuItems.forEach(function(spr:FlxSprite)
-		{
-			spr.animation.play('idle');
-
-			if (spr.ID == curSelected)
-			{
-				spr.animation.play('selected');
-				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
-			}
-
-			spr.updateHitbox();
-		});
+		if (selectedMenu >= menuItems.length)
+			selectedMenu = 0;
+		if (selectedMenu < 0)
+			selectedMenu = menuItems.length - 1;
 	}
 }
