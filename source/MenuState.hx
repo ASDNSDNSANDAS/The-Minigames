@@ -7,6 +7,7 @@ import flixel.FlxSprite;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.effects.FlxFlicker;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -49,6 +50,33 @@ class MenuState extends MenuUIState
 	{
 		super.update(elapsed);
 
+		if (FlxG.mouse.overlaps(menuItems))
+		{
+			if (FlxG.mouse.pressed)
+			{
+				menuItems.forEach(function(spr:FlxText)
+				{
+					new FlxTimer().start(1, function(tmr:FlxTimer)
+					{
+						var chosenOption:String = menuOptions[selectedMenu];
+
+						switch (chosenOption)
+						{
+							case 'Choose a Game':
+								FlxG.switchState(new GamePickerState());
+							case 'Multiplayer':
+								OpenURL('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+							case 'Options':
+								FlxG.switchState(new OptionsMenu());
+							case 'Exit':
+								System.exit(0);
+						}
+					});
+				});
+			}
+		}
+
+
 		var selectedOption:Bool = false; // this makes it player not able to move to a different option after he pressed
 
 		if (!selectedOption)
@@ -66,8 +94,9 @@ class MenuState extends MenuUIState
 			if (FlxG.keys.justPressed.ENTER)
 			{
 				selectedOption = true;
+				// FlxFlicker.flicker(menuItem, 1, 0.04, true, true);
 
-				menuItems.forEach(function(spr:FlxSprite)
+				menuItems.forEach(function(spr:FlxText)
 				{
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
@@ -91,11 +120,19 @@ class MenuState extends MenuUIState
 
 		menuItems.forEach(function(option:FlxText)
 		{
+			var optionY:Int = 60 + (option.ID * 80);
+
 			if (option.ID != selectedMenu)
+			{
 				option.color = FlxColor.WHITE;
+				FlxTween.linearMotion(option, 50, optionY, 100, optionY, 130, false);
+			}
 
 			if (option.ID == selectedMenu)
+			{
 				option.color = FlxColor.YELLOW;
+				FlxTween.linearMotion(option, 100, optionY, 50, optionY, 130, false);
+			}
 		});
 	}
 
