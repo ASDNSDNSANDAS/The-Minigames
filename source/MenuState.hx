@@ -32,6 +32,8 @@ class MenuState extends MenuUIState
 	{
 		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(AssetPaths.image('bg'));
 		add(bg);
+
+		menuItems = new FlxTypedGroup<FlxText>();
 		add(menuItems);
 
 		for (i in 0...menuOptions.length)
@@ -89,7 +91,8 @@ class MenuState extends MenuUIState
 
 		menuItems.forEach(function(option:FlxText)
 		{
-			menuItem.color = FlxColor.WHITE;
+			if (option.ID != selectedMenu)
+				option.color = FlxColor.WHITE;
 
 			if (option.ID == selectedMenu)
 				option.color = FlxColor.YELLOW;
