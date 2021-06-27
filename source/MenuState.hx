@@ -23,11 +23,14 @@ using StringTools;
 
 class MenuState extends MenuUIState
 {
-	var selectedMenu:Int = 0;
+	var selectedMenu:Int = 0;  
 
 	var menuOptions:Array<String> = ['Choose a Game', 'Multiplayer', 'Options', 'Exit'];
 	var menuItem:FlxText;
 	var menuItems:FlxTypedGroup<FlxText>;
+
+	var versionTxt:String = sys.io.File.getContent(AssetPaths.txt('version'));
+	var version:FlxText;
 
 	override function create()
 	{
@@ -36,6 +39,11 @@ class MenuState extends MenuUIState
 
 		menuItems = new FlxTypedGroup<FlxText>();
 		add(menuItems);
+
+		version = new FlxText(5, FlxG.height - 26, 0, versionTxt, 12);
+		version.scrollFactor.set();
+		version.setFormat(16, FlxColor.WHITE, LEFT);
+		add(version);
 
 		for (i in 0...menuOptions.length)
 		{
