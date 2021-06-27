@@ -51,7 +51,7 @@ class Details extends TextField
       
             if (visible) 
             {
-                text = "FPS: " + times.length + "\nMemory: " + mem + " MB\nMemory Peak: " + memPeak + " MB";	
+                text = "FPS: " + times.length + "\nMemory Usage: " + mem + " MB\nMemory Peak: " + memPeak + " MB";	
             }
         }
 }
