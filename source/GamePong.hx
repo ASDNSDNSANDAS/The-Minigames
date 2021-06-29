@@ -20,7 +20,7 @@ import lime.app.Application;
 import Discord.DiscordClient;
 #end
 
-class GamePong extends MenuState
+class GamePong extends PlayState
 {
     var bouncerLeft:FlxSprite;
     var bouncerRight:FlxSprite;

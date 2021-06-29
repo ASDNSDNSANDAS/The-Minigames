@@ -230,9 +230,9 @@ class GamePickerState extends MenuUIState
 				case 'Pong':
 					FlxG.switchState(new GamePong());
 				case 'Tetris':
-				// FlxG.switchState(new GameTetris());
+					// FlxG.switchState(new GameTetris());
 				case 'something':
-				// nothing
+					// nothing
 				case 'something':
 					// nothing
 			}

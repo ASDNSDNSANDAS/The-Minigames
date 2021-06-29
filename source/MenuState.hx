@@ -172,7 +172,8 @@ class MenuState extends MenuUIState
 						switch (chosenOption)
 						{
 							case 'GamePicker':
-								FlxG.switchState(new GamePickerState());
+								// FlxG.switchState(new GamePickerState());
+								FlxG.switchState(new GamePong());
 							case 'Multiplayer':
 								if (!pressedOnce)
 								{
@@ -256,7 +257,8 @@ class MenuState extends MenuUIState
 			switch (chosenOption)
 			{
 				case 'GamePicker':
-					FlxG.switchState(new GamePickerState());
+					// FlxG.switchState(new GamePickerState());
+					FlxG.switchState(new GamePong());
 				case 'Multiplayer':
 					if (!pressedOnce)
 					{
