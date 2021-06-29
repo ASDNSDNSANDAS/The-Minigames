@@ -27,6 +27,7 @@ class MenuState extends MenuUIState
 	var selectedMouse:Int = -1;
 	
 	var selectedOption:Bool = false;
+	var optionIsChosen:Bool = false;
 
 	var pressedOnce:Bool = false;
 
@@ -83,50 +84,53 @@ class MenuState extends MenuUIState
 
 		selectedOption = false;
 
-		if (FlxG.mouse.overlaps(menuItems)) // this works so fuck you kek
+		if (!optionIsChosen)
 		{
-			if (FlxG.mouse.overlaps(mouseOverlay0))
+			if (FlxG.mouse.overlaps(menuItems)) // this works so fuck you kek
 			{
-				mouseIsOverlayed();
-				selectedMouse = 0;
-				selectedOption = true;
-
-				if (FlxG.mouse.justPressed)
+				if (FlxG.mouse.overlaps(mouseOverlay0))
 				{
-					mouseClickedMenu();
+					mouseIsOverlayed();
+					selectedMouse = 0;
+					selectedOption = true;
+
+					if (FlxG.mouse.justPressed)
+					{
+						mouseClickedMenu();
+					}
 				}
-			}
-			else if (FlxG.mouse.overlaps(mouseOverlay1))
-			{
-				mouseIsOverlayed();
-				selectedMouse = 1;
-				selectedOption = true;
-
-				if (FlxG.mouse.justPressed)
+				else if (FlxG.mouse.overlaps(mouseOverlay1))
 				{
-					mouseClickedMenu();
+					mouseIsOverlayed();
+					selectedMouse = 1;
+					selectedOption = true;
+
+					if (FlxG.mouse.justPressed)
+					{
+						mouseClickedMenu();
+					}
 				}
-			}
-			else if (FlxG.mouse.overlaps(mouseOverlay2))
-			{
-				mouseIsOverlayed();
-				selectedMouse = 2;
-				selectedOption = true;
-
-				if (FlxG.mouse.justPressed)
+				else if (FlxG.mouse.overlaps(mouseOverlay2))
 				{
-					mouseClickedMenu();
+					mouseIsOverlayed();
+					selectedMouse = 2;
+					selectedOption = true;
+
+					if (FlxG.mouse.justPressed)
+					{
+						mouseClickedMenu();
+					}
 				}
-			}
-			else if (FlxG.mouse.overlaps(mouseOverlay3))
-			{
-				mouseIsOverlayed();
-				selectedMouse = 3;
-				selectedOption = true;
-
-				if (FlxG.mouse.justPressed)
+				else if (FlxG.mouse.overlaps(mouseOverlay3))
 				{
-					mouseClickedMenu();
+					mouseIsOverlayed();
+					selectedMouse = 3;
+					selectedOption = true;
+
+					if (FlxG.mouse.justPressed)
+					{
+						mouseClickedMenu();
+					}
 				}
 			}
 		}
@@ -234,6 +238,8 @@ class MenuState extends MenuUIState
 
 	function mouseClickedMenu()
 	{
+		optionIsChosen = true;
+
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			var chosenOption:String = menuOptions[selectedMouse];
