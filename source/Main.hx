@@ -71,14 +71,39 @@ class Main extends Sprite
 
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
-		
+
 		#if !mobile
-		fps_memory = new Details(10, 10, 0xffffff);
-		addChild(fps_memory);
+		fpsCounter = new FPS(10, 3, 0xFFFFFF);
+		addChild(fpsCounter);
+		toggleFPS(FlxG.save.data.fps);
 		#end
 	}
 
 	var game:FlxGame;
 
-	var fps_memory:Details;
+	var fpsCounter:FPS;
+
+	public function toggleFPS(fpsEnabled:Bool):Void {
+		fpsCounter.visible = fpsEnabled;
+	}
+
+	public function changeFPSColor(color:FlxColor)
+	{
+		fpsCounter.textColor = color;
+	}
+
+	public function setFPSCap(cap:Float)
+	{
+		openfl.Lib.current.stage.frameRate = cap;
+	}
+
+	public function getFPSCap():Float
+	{
+		return openfl.Lib.current.stage.frameRate;
+	}
+
+	public function getFPS():Float
+	{
+		return fpsCounter.currentFPS;
+	}
 }

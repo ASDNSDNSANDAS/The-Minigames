@@ -16,6 +16,8 @@ class MenuUIState extends FlxUIState
 {
 	override function create()
 	{
+		(cast (Lib.current.getChildAt(0), Main)).setFPSCap(FlxG.save.data.fpsCap);
+
 		if (transIn != null)
 			trace('reg ' + transIn.region);
 
@@ -24,6 +26,9 @@ class MenuUIState extends FlxUIState
 
     override function update(elapsed:Float)
 	{
+		if ((cast(Lib.current.getChildAt(0), Main)).getFPSCap != FlxG.save.data.fpsCap && FlxG.save.data.fpsCap <= 120)
+			(cast(Lib.current.getChildAt(0), Main)).setFPSCap(FlxG.save.data.fpsCap);
+
 		super.update(elapsed);
 	}
 	
